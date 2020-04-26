@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	player()
 	clearScreen()
 	showTitleScreen()
 	os.Exit(0)

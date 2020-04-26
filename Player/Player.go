@@ -17,6 +17,6 @@ type player struct {
 //	return e
 //}
 
-func attackEnemy() {
-
+func attackEnemy() string {
+	return "Attacked!"
 }
