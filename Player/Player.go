@@ -1,7 +1,7 @@
 package player
 
 //Player : Does things
-type Player struct {
+type player struct {
 	name      string
 	hp        int
 	mp        int
