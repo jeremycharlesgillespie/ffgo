@@ -1,4 +1,4 @@
-package Player
+package player
 
 //Player : Does things
 type Player struct {
@@ -12,11 +12,11 @@ type Player struct {
 }
 
 // New : Does things
-//func New(name string, hp int, mp int, attack int, def int, potions int, abilities []string) player {
+func New(name string, hp int, mp int, attack int, def int, potions int, abilities []string) player {
 
-//	e := player{name, hp, mp, attack, def, potions, abilities}
-//	return e
-//}
+	e := player{name, hp, mp, attack, def, potions, abilities}
+	return e
+}
 
 func attackEnemy() {
 
