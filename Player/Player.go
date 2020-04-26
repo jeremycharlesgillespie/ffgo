@@ -12,10 +12,10 @@ type Player struct {
 }
 
 // New : Does things
-func New(name string, hp int, mp int, attack int, def int, potions int, abilities []string) Player {
-	e := Player{name, hp, mp, attack, def, potions, abilities}
-	return e
-}
+//func New(name string, hp int, mp int, attack int, def int, potions int, abilities []string) Player {
+//	e := Player{name, hp, mp, attack, def, potions, abilities}
+//	return e
+//}
 
 func attackEnemy() {
 
