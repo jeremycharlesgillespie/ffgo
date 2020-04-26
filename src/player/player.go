@@ -1,14 +1,14 @@
 package player
 
 //Player : Does things
-type player struct {
-	name      string
-	hp        int
-	mp        int
-	attack    int
-	def       int
-	potions   int
-	abilities []string
+type Player struct {
+	Name      string
+	Hp        int
+	Mp        int
+	Attack    int
+	Def       int
+	Potions   int
+	Abilities []string
 }
 
 // New : Does things
@@ -16,6 +16,9 @@ type player struct {
 //	e := Player{name, hp, mp, attack, def, potions, abilities}
 //	return e
 //}
+
+//Taco : is a taco
+var Taco = "asdf"
 
 func attackEnemy() string {
 	return "Attacked!"

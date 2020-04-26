@@ -6,12 +6,14 @@ import (
 	"os"
 	"os/exec"
 	"time"
+
+	"github.com/metalgear386/ffgo/src/player"
 )
 
 func main() {
-	player()
 	clearScreen()
 	showTitleScreen()
+	createPlayer()
 	os.Exit(0)
 }
 
@@ -68,9 +70,9 @@ func showTitleScreen() {
 }
 
 func createPlayer() {
-	abilities := []string{"Attack", "Drink Potion"}
-	hero := player{"Jeremy", 100, 50, 20, 10, 2, abilities}
-	fmt.Println(hero)
+	//abilities := []string{"Attack", "Drink Potion"}
+	//hero := player.Player{"Jeremy", 100, 50, 20, 10, 2, abilities}
+	fmt.Println(player.Taco)
 }
 
 func createEnemy() {

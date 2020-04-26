@@ -1,6 +1,7 @@
 package enemy
 
-type enemy struct {
+//Enemy : is a bad guy
+type Enemy struct {
 	name      string
 	hp        int
 	mp        int
