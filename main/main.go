@@ -68,7 +68,7 @@ func showTitleScreen() {
 
 func createPlayer() {
 	abilities := []string{"Attack", "Drink Potion"}
-	hero := player.new("Jeremy", 100, 50, 20, 10, 2, abilities)
+	hero := player{"Jeremy", 100, 50, 20, 10, 2, abilities}
 	fmt.Println(hero)
 }
 
