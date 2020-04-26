@@ -1,0 +1,23 @@
+
+Game structure
+    main loop
+        start screen
+        create new player
+        create new enemy
+        begin battle squence
+            check who goes first
+            choose that character
+            let character decide/make enemy decision
+                for character, show menu screen
+                for enemy, choose attack (for now)
+            execute decision
+                character attack ->do attack, 10dmg base, expand on complexity later on. 
+                enemy attack ->do attack, 10dmg base, expand on complexity later on. 
+                check if someone is dead
+                    if someone is dead, show end screen
+                    press enter to go back to start screen
+            choose -other- character, repeat until someone is dead
+            
+            
+Game design
+    Game will be a CLI game with user input (press 1 to choose the 1.___ action, 2, so on)
