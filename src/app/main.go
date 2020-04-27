@@ -14,6 +14,7 @@ func main() {
 	clearScreen()
 	showTitleScreen()
 	createPlayer()
+	createEnemy()
 	os.Exit(0)
 }
 
@@ -70,16 +71,21 @@ func showTitleScreen() {
 }
 
 func createPlayer() {
-	//abilities := []string{"Attack", "Drink Potion"}
-	//hero := player.Player{"Jeremy", 100, 50, 20, 10, 2, abilities}
-	fmt.Println(player.Taco)
+	abilities := []string{"Attack", "Drink Potion"}
+	hero := player.Player{Name: "Jeremy", Hp: 100, Mp: 50, Attack: 20, Def: 10, Potions: 2, Speed: 5, Abilities: abilities}
+	fmt.Println(hero.AttackEnemy())
+	fmt.Println(hero.Name)
 }
 
 func createEnemy() {
+	abilities := []string{"Attack"}
+	enemy := player.Player{Name: "Dragon", Hp: 100, Mp: 50, Attack: 20, Def: 10, Speed: 1, Abilities: abilities}
+	fmt.Println(enemy.AttackEnemy())
+	fmt.Println(enemy.Name)
 }
 
 func determineFirstPlay() {
-
+    if  
 }
 
 func showEndScreen() {
