@@ -8,6 +8,7 @@ type Player struct {
 	Attack    int
 	Def       int
 	Potions   int
+	Speed     int
 	Abilities []string
 }
 
@@ -17,9 +18,8 @@ type Player struct {
 //	return e
 //}
 
-//Taco : is a taco
-var Taco = "asdf"
-
-func attackEnemy() string {
-	return "Attacked!"
+//AttackEnemy : attacks an enemy
+func (p Player) AttackEnemy() string {
+	message := p.Name + " attacked!"
+	return message
 }
