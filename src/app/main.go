@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"os"
 	"os/exec"
 	"time"
@@ -52,15 +53,15 @@ func battleLoop(player character.Player, enemy character.Enemy) {
 		showStatusScreen(player, enemy)
 		player, enemy = battleMenu(player, enemy)
 		time.Sleep(2 * time.Second)
+		if enemyDied(enemy) {
+			enemyDeathScreen()
+		}
 		enemy, player = enemy.AttackPlayer(player)
 		time.Sleep(2 * time.Second)
+		if playerDied(player) {
+			playerDeathScreen()
+		}
 		clearScreen()
-	}
-	if playerDied(player) {
-		playerDeathScreen()
-	}
-	if enemyDied(enemy) {
-		enemyDeathScreen()
 	}
 }
 
@@ -129,7 +130,11 @@ func createPlayer() character.Player {
 
 func createEnemy() character.Enemy {
 	abilities := []string{"Attack"}
-	enemy := character.Enemy{Name: "Dragon", Hp: 100, Mp: 50, Attack: 20, Def: 10, Speed: 1, Abilities: abilities}
+	rand.Seed(time.Now().UnixNano())
+	min := 10
+	max := 30
+	attack := rand.Intn(max-min) + min
+	enemy := character.Enemy{Name: "Dragon", Hp: 100, Mp: 50, Attack: attack, Def: 10, Speed: 1, Abilities: abilities}
 	fmt.Println(enemy.Name + " Enters the Fight!")
 	return enemy
 }

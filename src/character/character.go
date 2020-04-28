@@ -2,7 +2,9 @@ package character
 
 import (
 	"fmt"
+	"math/rand"
 	"strconv"
+	"time"
 )
 
 //Character : This is the default template for any character, good or bad.
@@ -34,19 +36,29 @@ type Enemy struct {
 
 //AttackEnemy : This is a Player Skill. Takes an Enemy object as an input and returns the Player and Enemy objects.
 func (player Player) AttackEnemy(enemy Enemy) (Player, Enemy) {
-	playerAttack := strconv.Itoa(player.Attack)
+	rand.Seed(time.Now().UnixNano())
+	min := 1
+	max := 5
+	attackVariance := rand.Intn(max-min) + min
+	totalAttack := player.Attack + attackVariance
+	playerAttack := strconv.Itoa(totalAttack)
 	message := player.Name + " attacked the " + enemy.Name + " for " + playerAttack + " points of damage!"
 	fmt.Println(message)
-	enemy.Hp = enemy.Hp - player.Attack
+	enemy.Hp = enemy.Hp - totalAttack
 	return player, enemy
 }
 
 //AttackPlayer : This is a Enemy Skill. Takes a Player object as an input and returns the Enemy and Player objects.
 func (enemy Enemy) AttackPlayer(player Player) (Enemy, Player) {
-	enemyAttack := strconv.Itoa(enemy.Attack)
+	rand.Seed(time.Now().UnixNano())
+	min := 2
+	max := 10
+	attackVariance := rand.Intn(max-min) + min
+	totalAttack := enemy.Attack + attackVariance
+	enemyAttack := strconv.Itoa(totalAttack)
 	message := "The " + enemy.Name + " attacked " + player.Name + " for " + enemyAttack + " points of damage!"
 	fmt.Println(message)
-	player.Hp = player.Hp - enemy.Attack
+	player.Hp = player.Hp - totalAttack
 	return enemy, player
 }
 
