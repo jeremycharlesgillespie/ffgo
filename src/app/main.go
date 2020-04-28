@@ -50,12 +50,11 @@ func playerDeathScreen() {
 func battleLoop(player character.Player, enemy character.Enemy) {
 	for !enemyDied(enemy) && !playerDied(player) {
 		showStatusScreen(player, enemy)
-		//time.Sleep(1 * time.Second)
-		//clearScreen()
 		player, enemy = battleMenu(player, enemy)
-		time.Sleep(1 * time.Second)
-		clearScreen()
+		time.Sleep(2 * time.Second)
 		enemy, player = enemy.AttackPlayer(player)
+		time.Sleep(2 * time.Second)
+		clearScreen()
 	}
 	if playerDied(player) {
 		playerDeathScreen()
@@ -67,6 +66,7 @@ func battleLoop(player character.Player, enemy character.Enemy) {
 
 func showStatusScreen(player character.Player, enemy character.Enemy) {
 	clearScreen()
+
 	fmt.Printf("Player HP: %d \nEnemy HP: %d\n", player.Hp, enemy.Hp)
 }
 
@@ -74,6 +74,7 @@ func clearScreen() {
 	cmd := exec.Command("clear")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
+	showHeader()
 }
 
 type errorString struct {
@@ -81,8 +82,6 @@ type errorString struct {
 }
 
 func takeUserInput(availableChoices []string) (string, error) {
-	//consoleReader := bufio.NewReader(os.Stdin)
-	//userInput, err := consoleReader.ReadString('\n')
 	var userInput string
 	fmt.Scanln(&userInput)
 	var validInput bool
@@ -104,12 +103,14 @@ func battleMenu(player character.Player, enemy character.Enemy) (character.Playe
 	for index, ability := range player.Abilities {
 		fmt.Println(index+1, ability)
 	}
+	fmt.Printf("\n")
 	possibleChoices := []string{"1", "2"}
 	userInput, err := takeUserInput(possibleChoices)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	clearScreen()
 	if userInput == "1" {
 		player, enemy = player.AttackEnemy(enemy)
 	}
@@ -143,10 +144,13 @@ func determineFirstPlay(player character.Player, enemy character.Enemy) string {
 	return whoGoesFirst
 }
 
+func showHeader() {
+	fmt.Println("------Final Fantasy Battle Simulator------")
+	fmt.Printf("\n")
+}
+
 func showTitleScreen() {
 	clearScreen()
-	fmt.Println("------Final Fantasy Battle Simulator------")
-	fmt.Println("")
 	fmt.Println("1. Start New Game")
 	possibleChoices := []string{"1"}
 	userInput, err := takeUserInput(possibleChoices)
