@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"time"
 
-	character "github.com/metalgear386/ffgo/src/player"
+	character "github.com/metalgear386/ffgo/src/character"
 )
 
 func main() {

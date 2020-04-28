@@ -12,7 +12,7 @@ type Enemy struct {
 }
 
 //AttackPlayer : attacks the player
-func (p Enemy) AttackPlayer() string {
-	message := p.Name + " attacked!"
-	return message
-}
+//func (p Enemy) AttackPlayer(player player) string {
+//	message := p.Name + " attacked " + player.Name + "!"
+//	fmt.Println(message)
+//}
