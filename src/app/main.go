@@ -7,15 +7,67 @@ import (
 	"os/exec"
 	"time"
 
-	"github.com/metalgear386/ffgo/src/player"
+	character "github.com/metalgear386/ffgo/src/player"
 )
 
 func main() {
 	clearScreen()
 	showTitleScreen()
-	createPlayer()
-	createEnemy()
+	enemy := createEnemy()
+	player := createPlayer()
+	battleLoop(player, enemy)
 	os.Exit(0)
+}
+
+func playerDied(player character.Player) bool {
+	var playerDied bool
+	if player.Hp <= 0 {
+		playerDied = true
+	}
+	return playerDied
+}
+
+func enemyDied(enemy character.Enemy) bool {
+	var enemyDied bool
+	if enemy.Hp <= 0 {
+		enemyDied = true
+	}
+	return enemyDied
+}
+
+func enemyDeathScreen() {
+	clearScreen()
+	fmt.Println("You have defeated the enemy!\nTry again?")
+	os.Exit(0)
+}
+
+func playerDeathScreen() {
+	clearScreen()
+	fmt.Println("The player has died while in battle.\nTry again?")
+	os.Exit(0)
+}
+
+func battleLoop(player character.Player, enemy character.Enemy) {
+	for !enemyDied(enemy) && !playerDied(player) {
+		showStatusScreen(player, enemy)
+		//time.Sleep(1 * time.Second)
+		//clearScreen()
+		player, enemy = battleMenu(player, enemy)
+		time.Sleep(1 * time.Second)
+		clearScreen()
+		enemy, player = enemy.AttackPlayer(player)
+	}
+	if playerDied(player) {
+		playerDeathScreen()
+	}
+	if enemyDied(enemy) {
+		enemyDeathScreen()
+	}
+}
+
+func showStatusScreen(player character.Player, enemy character.Enemy) {
+	clearScreen()
+	fmt.Printf("Player HP: %d \nEnemy HP: %d\n", player.Hp, enemy.Hp)
 }
 
 func clearScreen() {
@@ -27,10 +79,6 @@ func clearScreen() {
 type errorString struct {
 	s string
 }
-
-//func (e *errorString) Error() string {
-//	return e.s
-//}
 
 func takeUserInput(availableChoices []string) (string, error) {
 	//consoleReader := bufio.NewReader(os.Stdin)
@@ -44,11 +92,61 @@ func takeUserInput(availableChoices []string) (string, error) {
 		}
 	}
 	if validInput {
-		fmt.Println("This is valid input!")
+		fmt.Printf("")
 	} else {
 		return "", errors.New("This is not valid input")
 	}
 	return userInput, nil
+}
+
+func battleMenu(player character.Player, enemy character.Enemy) (character.Player, character.Enemy) {
+	fmt.Printf("\n\n")
+	for index, ability := range player.Abilities {
+		fmt.Println(index+1, ability)
+	}
+	possibleChoices := []string{"1", "2"}
+	userInput, err := takeUserInput(possibleChoices)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	if userInput == "1" {
+		player, enemy = player.AttackEnemy(enemy)
+	}
+	if userInput == "2" {
+		player = drinkPotion(player)
+	}
+	return player, enemy
+}
+
+func drinkPotion(player character.Player) character.Player {
+	player.Hp = player.Hp + 50
+	fmt.Println(player.Name + " drank a potion to restore HP!")
+	return player
+}
+
+func createPlayer() character.Player {
+	abilities := []string{"Attack", "Drink Potion"}
+	hero := character.Player{Name: "Jeremy", Hp: 100, Mp: 50, Attack: 20, Def: 10, Potions: 2, Speed: 5, Abilities: abilities}
+	fmt.Println(hero.Name + " Enters the Fight!")
+	return hero
+}
+
+func createEnemy() character.Enemy {
+	abilities := []string{"Attack"}
+	enemy := character.Enemy{Name: "Dragon", Hp: 100, Mp: 50, Attack: 20, Def: 10, Speed: 1, Abilities: abilities}
+	fmt.Println(enemy.Name + " Enters the Fight!")
+	return enemy
+}
+
+func determineFirstPlay(player character.Player, enemy character.Enemy) string {
+	var whoGoesFirst string
+	if player.Speed > enemy.Speed {
+		whoGoesFirst = "player"
+	} else {
+		whoGoesFirst = "enemy"
+	}
+	return whoGoesFirst
 }
 
 func showTitleScreen() {
@@ -68,26 +166,4 @@ func showTitleScreen() {
 		time.Sleep(2 * time.Second)
 		clearScreen()
 	}
-}
-
-func createPlayer() {
-	abilities := []string{"Attack", "Drink Potion"}
-	hero := player.Player{Name: "Jeremy", Hp: 100, Mp: 50, Attack: 20, Def: 10, Potions: 2, Speed: 5, Abilities: abilities}
-	fmt.Println(hero.AttackEnemy())
-	fmt.Println(hero.Name)
-}
-
-func createEnemy() {
-	abilities := []string{"Attack"}
-	enemy := player.Player{Name: "Dragon", Hp: 100, Mp: 50, Attack: 20, Def: 10, Speed: 1, Abilities: abilities}
-	fmt.Println(enemy.AttackEnemy())
-	fmt.Println(enemy.Name)
-}
-
-func determineFirstPlay() {
-    if  
-}
-
-func showEndScreen() {
-
 }
