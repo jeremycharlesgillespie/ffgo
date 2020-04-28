@@ -46,3 +46,15 @@ func (enemy Enemy) AttackPlayer(player Player) (Enemy, Player) {
 	player.Hp = player.Hp - enemy.Attack
 	return enemy, player
 }
+
+//DrinkPotion : This is a Player skill. It is used to drink a potion to restore HP, if there is one available.
+func (player Player) DrinkPotion() Player {
+	if player.Potions > 0 {
+		player.Hp = player.Hp + 50
+		player.Potions = player.Potions - 1
+		fmt.Println(player.Name + " drank a potion to restore HP!")
+	} else {
+		fmt.Println(player.Name + " does not have any more potions!")
+	}
+	return player
+}

@@ -114,15 +114,9 @@ func battleMenu(player character.Player, enemy character.Enemy) (character.Playe
 		player, enemy = player.AttackEnemy(enemy)
 	}
 	if userInput == "2" {
-		player = drinkPotion(player)
+		player = player.DrinkPotion()
 	}
 	return player, enemy
-}
-
-func drinkPotion(player character.Player) character.Player {
-	player.Hp = player.Hp + 50
-	fmt.Println(player.Name + " drank a potion to restore HP!")
-	return player
 }
 
 func createPlayer() character.Player {
